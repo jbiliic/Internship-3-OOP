@@ -25,6 +25,7 @@ namespace ConsoleApp1.Classes
                         Console.ReadKey();
                         continue;
                     }
+                    Console.Clear();
                     return toReturn;
                 }
                 catch (Exception)
@@ -44,6 +45,7 @@ namespace ConsoleApp1.Classes
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || toReturn.Length > 20 || ContainsSpecialCharacters(toReturn))
                 { Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20 i nesmije sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                Console.Clear();
                 return toReturn;
             }
         }
@@ -57,6 +59,7 @@ namespace ConsoleApp1.Classes
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || !toReturn.EndsWith("@gmail.com"))
                 { Console.Write($"\n{inputType} nesmije biti prazno, te mora zavrsavati sa @gmail.com!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                Console.Clear();
                 return toReturn;
             }
         }
@@ -70,7 +73,53 @@ namespace ConsoleApp1.Classes
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || !ContainsSpecialCharacters(toReturn))
                 { Console.Write($"\n{inputType} nesmije biti prazno, te mora biti duze od 6 slova i sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                Console.Clear();
                 return toReturn;
+            }
+        }
+        public static int getAndValidateEnum(string prompt, int minValue, int maxValue) { 
+            while (true)
+            {
+                Console.Clear();
+                Console.Write($"\n{prompt}: ");
+                var input = Console.ReadLine();
+                int toReturn;
+                if (!int.TryParse(input, out toReturn) || toReturn < minValue || toReturn > maxValue)
+                {
+                    Console.Write($"\nUnos mora biti broj izmedju {minValue} i {maxValue}!!! Pritisnite enter te pokusajte ponovno");
+                    Console.ReadKey();
+                    continue;
+                }
+                Console.Clear();
+                return toReturn;
+            }
+        }
+        public static int getAndValidateInputInt(string inputType)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write($"Unesite {inputType}: ");
+                var toReturn = Console.ReadLine();
+                try
+                {
+                    var toReturnParsed = int.Parse(toReturn);
+                    if (toReturnParsed < 0)
+                    {
+                        Console.Write("\nBroj mora biti veca od 0!!! Pritisnite enter te pokusajte ponovno");
+                        Console.ReadKey();
+                        continue;
+                    }
+                    Console.Clear();
+                    return toReturnParsed;
+                }
+                catch (Exception)
+                {
+                    Console.Clear();
+                    Console.Write("\nNeispravan format!!! Pritisnite enter te pokusajte ponovno");
+                    Console.ReadKey();
+                    continue;
+                }
             }
         }
 
@@ -85,5 +134,16 @@ namespace ConsoleApp1.Classes
             }
             return false;
         }
+        public static void clearDisplAndDisplMessage(string message)
+        {
+            Console.Clear();
+            Console.WriteLine(message);
+            Console.ReadKey();
+        }
+        public static bool DoTimeRangesOverlap( DateTime start1, DateTime end1,DateTime start2, DateTime end2)
+        {
+            return start1 < end2 && start2 < end1;
+        }
+
     }
 }

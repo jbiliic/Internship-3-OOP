@@ -8,7 +8,7 @@ namespace ConsoleApp1.Classes
 {
     internal class CabinCrew
     {
-        private static int idCounter = 0;
+        private static int idCounter = 1;
         private int id { get; }
         private string name { get; }
         private List<CabinMember> crew = new List<CabinMember>();

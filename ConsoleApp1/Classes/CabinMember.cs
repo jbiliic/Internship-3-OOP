@@ -9,7 +9,7 @@ namespace ConsoleApp1.Classes
 {
     internal class CabinMember
     {
-        private static int idCounter = 0;
+        private static int idCounter = 1;
         private int id { get; }
         private string name { get; }
         private string lastName { get; }

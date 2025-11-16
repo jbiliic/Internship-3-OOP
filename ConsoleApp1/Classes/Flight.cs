@@ -9,7 +9,7 @@ namespace ConsoleApp1.Classes
 {
     internal class Flight
     {
-        private static int idCounter = 0;
+        private static int idCounter = 1;
         private int id { get; }
         private int distance { get; }
         private string origin { get; }
@@ -19,9 +19,8 @@ namespace ConsoleApp1.Classes
         private DateTime arrivalTime { get; set; }
         private DateTime createdAt { get; }
         private DateTime updatedAt { get; }
-        public TimeSpan Duration => arrivalTime - departureTime;
+        public TimeSpan duration => arrivalTime - departureTime;
         private List<User> passengers = new List<User>() ;
-        private flightClasses flightClass { get; }
         private Plane assignedPlane { get; set; }
         private CabinCrew assignedCrew { get; set; }
 
@@ -33,12 +32,24 @@ namespace ConsoleApp1.Classes
             this.distance = distance;
             this.departureTime = departureTime;
             this.arrivalTime = arrivalTime;
-            this.flightClass = flightClass;
             this.assignedPlane = assignedPlane;
             this.assignedCrew = assignedCrew;
             this.createdAt = DateTime.Now;
             this.updatedAt = DateTime.Now;
             this.id = idCounter++;
+        }
+        public void printFlightInfo()
+        {
+            Console.WriteLine($"{id} - {name} - {departureTime} - {arrivalTime} - {distance} - {duration}");
+        }
+        public List<User> getPassengers() => passengers;
+        public Plane getPlane() => assignedPlane;
+        public DateTime getDepartureTime() => departureTime;
+        public DateTime getArrvalTime() => arrivalTime;
+        public int getId() => id; 
+        public void addPassenger(User user)
+        {
+            passengers.Add(user);
         }
     }
 }

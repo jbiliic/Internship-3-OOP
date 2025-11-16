@@ -9,7 +9,7 @@ namespace ConsoleApp1.Classes
 {
     internal class Plane
     {
-        private static int idCounter = 0;
+        private static int idCounter = 1;
         private int id { get; }
         private string model { get; }
         private int capacity { get; }
@@ -24,5 +24,6 @@ namespace ConsoleApp1.Classes
             this.makeYear = makeYear;
             this.id = idCounter++;
         }
+        public int getCapacity() => capacity;
     }
 }
