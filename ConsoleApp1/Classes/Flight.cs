@@ -14,7 +14,7 @@ namespace ConsoleApp1.Classes
         private int distance { get; }
         private string origin { get; }
         private string destination { get; }
-        private string name => $"{origin} to {destination}";
+        private string name => $"{origin}-{destination}";
         private DateTime departureTime { get; set; }
         private DateTime arrivalTime { get; set; }
         private DateTime createdAt { get; }
@@ -51,5 +51,11 @@ namespace ConsoleApp1.Classes
         {
             passengers.Add(user);
         }
+        public string getName() => name;
+        public void removePassenger(User user)
+        {
+            passengers.Remove(user);
+        }
+
     }
 }

@@ -19,7 +19,7 @@ namespace ConsoleApp1.Classes
         private DateTime createdAt { get; }
         private DateTime dateOfBirth { get; }
 
-        private Dictionary<flightClasses, Flight> flights = new Dictionary<flightClasses, Flight>();
+        private Dictionary<Flight, flightClasses> flights = new Dictionary<Flight, flightClasses>();
 
         public User(string name, string lastName, string email, string password, DateTime dateOfBirth, gender userGender)
         {
@@ -37,12 +37,12 @@ namespace ConsoleApp1.Classes
             Console.WriteLine($"Letovi za korisnika {name} {lastName}:");
             foreach (var flight in flights)
             {
-                flight.Value.printFlightInfo();
+                flight.Key.printFlightInfo();
             }
         }
         public string getEmail()=> email;
         public string getPassword() => password;
-        public Dictionary<flightClasses, Flight> getFlights() => flights;
+        public Dictionary<Flight, flightClasses> getFlights() => flights;
 
     }
 }

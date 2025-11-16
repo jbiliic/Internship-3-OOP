@@ -144,6 +144,28 @@ namespace ConsoleApp1.Classes
         {
             return start1 < end2 && start2 < end1;
         }
-
+        public static bool waitForConfirmation() { 
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("\nJeste li sigurni (da/ne): ");
+                switch (Console.ReadLine()) {
+                    case "da":
+                    case "DA":
+                    case "Da":
+                        Console.Clear();
+                        return true;
+                    case "ne":
+                    case "NE":
+                    case "Ne":
+                        Console.Clear();
+                        return false;
+                    default:
+                        Console.Write("\nNeispravan unos!!! Pritisnite enter te pokusajte ponovno");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
     }
 }
