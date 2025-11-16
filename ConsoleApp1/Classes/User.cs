@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ConsoleApp1.enums;
+
+namespace ConsoleApp1.Classes
+{
+    internal class User
+    {
+        private static int idCounter = 0;
+        private int id { get; }
+        private string name { get; }
+        private string lastName { get; }
+        private string email { get; }
+        private string password { get; }
+        private gender userGender { get; }
+        private DateTime createdAt { get; }
+        private DateTime dateOfBirth { get; }
+
+        private List<Flight> flights = new List<Flight>();
+
+        User(string name, string lastName, string email, string password, DateTime dateOfBirth, gender userGender)
+        {
+            this.name = name;
+            this.lastName = lastName;
+            this.email = email;
+            this.password = password;
+            this.dateOfBirth = dateOfBirth;
+            this.userGender = userGender;
+            this.createdAt = DateTime.Now;
+            this.id = idCounter++;
+        }
+
+    }
+}
