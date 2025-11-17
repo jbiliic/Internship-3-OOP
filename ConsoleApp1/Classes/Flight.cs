@@ -44,6 +44,7 @@ namespace ConsoleApp1.Classes
         }
         public List<User> getPassengers() => passengers;
         public Plane getPlane() => assignedPlane;
+        public CabinCrew getCrew() => assignedCrew;
         public DateTime getDepartureTime() => departureTime;
         public DateTime getArrvalTime() => arrivalTime;
         public int getId() => id; 
@@ -64,5 +65,6 @@ namespace ConsoleApp1.Classes
         {
             assignedPlane = plane;
         }
+        
     }
 }

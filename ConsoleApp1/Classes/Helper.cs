@@ -233,5 +233,13 @@ namespace ConsoleApp1.Classes
             }
             return availableCrew;
         }
+        public static Dictionary<int, Flight> canBeDeleted() { 
+            var canBeDeleted = new Dictionary<int, Flight>();
+            foreach (var flight in GlobalVariables.flightDataBase) { 
+                if(flight.getPassengers().Count()<0.5*flight.getPlane().getCapacity() && flight.getDepartureTime()>DateTime.Now.AddHours(24))
+                    canBeDeleted.Add(flight.getId(), flight);
+            }
+            return canBeDeleted;
+        }
     }
 }
