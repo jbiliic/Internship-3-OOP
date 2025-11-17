@@ -16,7 +16,7 @@ namespace ConsoleApp1.Classes
         private DateTime createdAt { get; }
         private DateTime makeYear { get; }
         private List<Flight> flights = new List<Flight>();
-        Plane(string model, int capacity, DateTime makeYear)
+        public Plane(string model, int capacity, DateTime makeYear)
         {
             this.model = model;
             this.capacity = capacity;

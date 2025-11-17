@@ -16,7 +16,7 @@ namespace ConsoleApp1.enums
     {
         Pilot = 1,
         Copilot = 2,
-        Stuardess = 3
+        Stewardess = 3
     }
     public enum gender
     {

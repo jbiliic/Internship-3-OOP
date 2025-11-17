@@ -155,11 +155,13 @@ namespace ConsoleApp1.Classes
                     case "Da":
                         Console.Clear();
                         return true;
+                        break;
                     case "ne":
                     case "NE":
                     case "Ne":
                         Console.Clear();
                         return false;
+                        break;
                     default:
                         Console.Write("\nNeispravan unos!!! Pritisnite enter te pokusajte ponovno");
                         Console.ReadKey();

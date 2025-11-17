@@ -21,26 +21,12 @@ namespace ConsoleApp1.screens
                     case '1':
                         var registratedUser = registrationScreen();
                         if (registratedUser == null) break;
-                        if (registratedUser.getFlights().Count != 0)
-                        {
-                            postRegScreen(registratedUser);
-                        }
-                        else
-                        {
-                            Helper.clearDisplAndDisplMessage("Nemate letova za prikaz. Pritisnite bilo koju tipku za nastavak");
-                        }
+                        postRegScreen(registratedUser);
                         break;
                     case '2':
                         var loggedInUser = loginScreen();
                         if (loggedInUser == null) break;
-                        if (loggedInUser.getFlights().Count != 0)
-                        {
-                            postRegScreen(loggedInUser);
-                        }
-                        else
-                        {
-                            Helper.clearDisplAndDisplMessage("Nemate letova za prikaz. Pritisnite bilo koju tipku za nastavak");
-                        }
+                        postRegScreen(loggedInUser);
                         break;
                     case '3':
                         return;
@@ -102,6 +88,11 @@ namespace ConsoleApp1.screens
                 {
                     case '1':
                         Console.Clear();
+                        if (loggedUser.getFlights().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate odabranih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
                         loggedUser.printAllFlights();
                         Console.ReadKey();
                         break;
@@ -109,9 +100,19 @@ namespace ConsoleApp1.screens
                         flightSelectionScreen(loggedUser);
                         break;
                     case '3':
+                        if (loggedUser.getFlights().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate odabranih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
                         flightSearchScreen(loggedUser);
                         break;
                     case '4':
+                        if (loggedUser.getFlights().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate odabranih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
                         flightCancellationScreen(loggedUser);
                         break;
                     case '5':
@@ -125,8 +126,7 @@ namespace ConsoleApp1.screens
         public static void flightSelectionScreen(User currentUser)
         {
             Console.Clear();
-            
-            var availableFlightsIds = new List<int>();
+            var availableFlightsIds = new Dictionary<int,Flight>();
             foreach (var flight in GlobalVariables.flightDataBase)
             {
                 bool doesFlightOverlap = false;
@@ -139,39 +139,46 @@ namespace ConsoleApp1.screens
                             doesFlightOverlap = true;
                             break;
                         }
-
                     }
                     if (!doesFlightOverlap)
                     {
-                        flight.printFlightInfo();
-                        availableFlightsIds.Add(flight.getId());
+                        
+                        availableFlightsIds.Add(flight.getId(),flight);
                     }
                 }
             }
-            while (true) { 
+            
+            while (true) {
+                Console.Clear();
+                foreach (var flight in availableFlightsIds.Values) {
+                    flight.printFlightInfo();
+                    
+                }
+                Console.ReadKey();
                 var selectedFlightIdInput = Helper.getAndValidateInputInt("ID leta koji zelite odabrati ili 0 za povratak");
                 if (selectedFlightIdInput == 0) return;
-                if (availableFlightsIds.Contains(selectedFlightIdInput)) { 
+                if (availableFlightsIds.Keys.Contains(selectedFlightIdInput)) { 
                     var selectedFlight = GlobalVariables.flightDataBase.Find(f => f.getId() == selectedFlightIdInput);
                     var flightClassInput = Helper.getAndValidateEnum("Odaberite klasu leta:\n1-Economy\n2-Buissnes\n3-Vip\nUnos: ", 1, 3);
                     currentUser.getFlights().Add(selectedFlight,(flightClasses)flightClassInput);
                     selectedFlight.addPassenger(currentUser);
                     Helper.clearDisplAndDisplMessage("Uspjesno ste odabrali let! Pritisnite bilo koju tipku za nastavak");
                     return;
+                } else
+                {
+                    Console.WriteLine("Let s navedenim id-em nije dostupan");
+                    Console.ReadKey();
+                    continue;
                 }
-                Console.WriteLine("Neispravan unos pokusajte ponovno");
             }
-
         }
         public static void flightSearchScreen(User currentUser)
         {
             Console.Clear();
-            //To be implemented
-
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Pregled po id\r\n2 - Pregled po imenu\r\nUnos:");
+                Console.Write("1 - Pregled po id\r\n2 - Pregled po imenu\r\n3 - Povratak \nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -210,7 +217,7 @@ namespace ConsoleApp1.screens
                     case '3':
                         return;
                     default:
-                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte nonovno");
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
                         break;
                 }
             }
@@ -221,6 +228,7 @@ namespace ConsoleApp1.screens
             {
                 Console.Clear();
                 currentUser.printAllFlights();
+                Console.ReadKey();
                 var flightIdInput = Helper.getAndValidateInputInt("ID leta koji zelite otkazati ili 0 za povratak");
                 if (flightIdInput == 0) return;
                 var selectedFlight = currentUser.getFlights().Keys.ToList().Find(f => f.getId() == flightIdInput);
@@ -228,11 +236,18 @@ namespace ConsoleApp1.screens
                 {
                     if (selectedFlight.getDepartureTime() > DateTime.Now.AddHours(24))
                     {
-                        Helper.waitForConfirmation();
-                        currentUser.getFlights().Remove(selectedFlight);
-                        selectedFlight.removePassenger(currentUser);
-                        Helper.clearDisplAndDisplMessage("Uspjesno ste otkazali let! Pritisnite bilo koju tipku za nastavak");
-                        return;
+                        if (Helper.waitForConfirmation())
+                        {
+                            currentUser.getFlights().Remove(selectedFlight);
+                            selectedFlight.removePassenger(currentUser);
+                            Helper.clearDisplAndDisplMessage("Uspjesno ste otkazali let! Pritisnite bilo koju tipku za nastavak");
+                            return;
+                        }
+                        else {
+                            Console.WriteLine("Radnja otkazana");
+                            Console.ReadKey();
+                            return;
+                        }
                     }
                     else
                     {

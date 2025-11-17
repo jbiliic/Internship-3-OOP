@@ -25,7 +25,7 @@ namespace ConsoleApp1.Classes
         private CabinCrew assignedCrew { get; set; }
 
 
-        Flight(string origin, string destination,int distance , DateTime departureTime, DateTime arrivalTime,flightClasses flightClass,Plane assignedPlane , CabinCrew assignedCrew)
+        public Flight(string origin, string destination,int distance , DateTime departureTime, DateTime arrivalTime,flightClasses flightClass,Plane assignedPlane , CabinCrew assignedCrew)
         {
             this.origin = origin;
             this.destination = destination;
@@ -40,7 +40,7 @@ namespace ConsoleApp1.Classes
         }
         public void printFlightInfo()
         {
-            Console.WriteLine($"{id} - {name} - {departureTime} - {arrivalTime} - {distance} - {duration}");
+            Console.WriteLine($"{id} - {name} - {departureTime} - {arrivalTime} - {distance}Kms - {duration}");
         }
         public List<User> getPassengers() => passengers;
         public Plane getPlane() => assignedPlane;
@@ -56,6 +56,13 @@ namespace ConsoleApp1.Classes
         {
             passengers.Remove(user);
         }
-
+        public void addCabinCrew(CabinCrew crew)
+        {
+            assignedCrew = crew;
+        }
+        public void addPlane(Plane plane)
+        {
+            assignedPlane = plane;
+        }
     }
 }

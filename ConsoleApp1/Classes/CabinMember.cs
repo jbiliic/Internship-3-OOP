@@ -19,7 +19,7 @@ namespace ConsoleApp1.Classes
         private DateTime dateOfBirth { get; }
         private CabinCrew currentCrew { get; set; }
 
-        CabinMember(string name, string lastName, cabinCrewRoles role, DateTime dateOfBirth,gender userGender)
+        public CabinMember(string name, string lastName, cabinCrewRoles role, DateTime dateOfBirth,gender userGender)
         {
             this.name = name;
             this.lastName = lastName;
@@ -29,5 +29,6 @@ namespace ConsoleApp1.Classes
             this.createdAt = DateTime.Now;
             this.id = idCounter++;
         }
+        public cabinCrewRoles getRole() => role;
     }
 }
