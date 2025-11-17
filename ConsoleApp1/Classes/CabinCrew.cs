@@ -7,7 +7,7 @@ using ConsoleApp1.enums;
 
 namespace ConsoleApp1.Classes
 {
-    internal class CabinCrew
+    public class CabinCrew
     {
         private static int idCounter = 1;
         private int id { get; }
@@ -43,5 +43,22 @@ namespace ConsoleApp1.Classes
                     break;
             }
         }
+        public List<Flight> getFlights() => assignedFlights;
+        public int getId() => id;
+        public List<CabinMember> getCrew() => crew;
+        public void printCrewInfo() { 
+            Console.WriteLine($"ID: {id} - Naziv posade: {name}");
+            foreach (var member in crew) {
+                Console.Write("\t");
+                member.printInfo();
+                
+            }
+            Console.Write("\n");
+        }
+        public void addFlight(Flight flight)
+        {
+            assignedFlights.Add(flight);
+        }
+        public string getName() => name;
     }
 }

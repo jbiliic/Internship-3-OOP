@@ -24,25 +24,27 @@ namespace ConsoleApp1.TestData
         {
             return new List<CabinMember>
             {
-                // Pilots
+                // Pilots (4 pilots for 4 crews)
                 new CabinMember("John", "Smith", cabinCrewRoles.Pilot, new DateTime(1980, 5, 15), gender.Male),
                 new CabinMember("Sarah", "Johnson", cabinCrewRoles.Pilot, new DateTime(1985, 8, 22), gender.Female),
                 new CabinMember("Michael", "Brown", cabinCrewRoles.Pilot, new DateTime(1978, 12, 3), gender.Male),
                 new CabinMember("Emily", "Davis", cabinCrewRoles.Pilot, new DateTime(1982, 3, 30), gender.Female),
                 
-                // Copilots
+                // Copilots (4 copilots for 4 crews)
                 new CabinMember("David", "Wilson", cabinCrewRoles.Copilot, new DateTime(1990, 7, 14), gender.Male),
                 new CabinMember("Jessica", "Miller", cabinCrewRoles.Copilot, new DateTime(1992, 2, 28), gender.Female),
                 new CabinMember("Robert", "Taylor", cabinCrewRoles.Copilot, new DateTime(1988, 11, 10), gender.Male),
                 new CabinMember("Amanda", "Anderson", cabinCrewRoles.Copilot, new DateTime(1991, 6, 5), gender.Female),
                 
-                // Stewardesses
+                // Stewardesses (8 stewardesses for 4 crews - 2 per crew)
                 new CabinMember("Lisa", "Martinez", cabinCrewRoles.Stewardess, new DateTime(1995, 4, 18), gender.Female),
                 new CabinMember("Jennifer", "Thomas", cabinCrewRoles.Stewardess, new DateTime(1993, 9, 25), gender.Female),
                 new CabinMember("Maria", "Garcia", cabinCrewRoles.Stewardess, new DateTime(1994, 1, 12), gender.Female),
                 new CabinMember("Susan", "Lee", cabinCrewRoles.Stewardess, new DateTime(1996, 8, 7), gender.Female),
                 new CabinMember("Patricia", "Harris", cabinCrewRoles.Stewardess, new DateTime(1992, 12, 15), gender.Female),
-                new CabinMember("Nancy", "Clark", cabinCrewRoles.Stewardess, new DateTime(1997, 3, 22), gender.Female)
+                new CabinMember("Nancy", "Clark", cabinCrewRoles.Stewardess, new DateTime(1997, 3, 22), gender.Female),
+                new CabinMember("Elizabeth", "Lewis", cabinCrewRoles.Stewardess, new DateTime(1994, 7, 8), gender.Female),
+                new CabinMember("Karen", "Walker", cabinCrewRoles.Stewardess, new DateTime(1996, 11, 19), gender.Female)
             };
         }
 
@@ -56,39 +58,35 @@ namespace ConsoleApp1.TestData
                 new CabinCrew("Delta Crew")
             };
 
-            // Distribute members among crews (2 pilots, 2 copilots, 3 stewardesses per crew)
-            int memberIndex = 0;
+            // Separate members by role for easier distribution
+            var pilots = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Pilot);
+            var copilots = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Copilot);
+            var stewardesses = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Stewardess);
 
-            foreach (var crew in crews)
+            // Distribute members among crews (1 pilot, 1 copilot, 2 stewardesses per crew)
+            for (int i = 0; i < crews.Count; i++)
             {
-                // Add 2 pilots
-                for (int i = 0; i < 2 && memberIndex < allMembers.Count; i++)
+                // Add 1 pilot to each crew
+                if (i < pilots.Count)
                 {
-                    if (allMembers[memberIndex].getRole() == cabinCrewRoles.Pilot)
-                    {
-                        crew.addMember(allMembers[memberIndex]);
-                    }
-                    memberIndex++;
+                    crews[i].addMember(pilots[i]);
                 }
 
-                // Add 2 copilots
-                for (int i = 0; i < 2 && memberIndex < allMembers.Count; i++)
+                // Add 1 copilot to each crew
+                if (i < copilots.Count)
                 {
-                    if (allMembers[memberIndex].getRole() == cabinCrewRoles.Copilot)
-                    {
-                        crew.addMember(allMembers[memberIndex]);
-                    }
-                    memberIndex++;
+                    crews[i].addMember(copilots[i]);
                 }
 
-                // Add 3 stewardesses
-                for (int i = 0; i < 3 && memberIndex < allMembers.Count; i++)
+                // Add 2 stewardesses to each crew
+                int stewardessIndex = i * 2;
+                if (stewardessIndex < stewardesses.Count)
                 {
-                    if (allMembers[memberIndex].getRole() == cabinCrewRoles.Stewardess)
-                    {
-                        crew.addMember(allMembers[memberIndex]);
-                    }
-                    memberIndex++;
+                    crews[i].addMember(stewardesses[stewardessIndex]);
+                }
+                if (stewardessIndex + 1 < stewardesses.Count)
+                {
+                    crews[i].addMember(stewardesses[stewardessIndex + 1]);
                 }
             }
 
@@ -138,15 +136,12 @@ namespace ConsoleApp1.TestData
                 var departureTime = DateTime.Now.AddDays(random.Next(1, 30)).AddHours(random.Next(24));
                 var arrivalTime = departureTime.AddHours(random.Next(2, 12));
 
-                var flightClass = (flightClasses)random.Next(0, 3); // Assuming 3 flight classes
-
                 var flight = new Flight(
                     route.Origin,
                     route.Destination,
                     route.Distance,
                     departureTime,
                     arrivalTime,
-                    flightClass,
                     plane,
                     crew
                 );
@@ -208,8 +203,15 @@ namespace ConsoleApp1.TestData
             Console.WriteLine($"Generated {users.Count} users");
             Console.WriteLine($"Generated {flights.Count} flights\n");
 
+            // Display crew composition
+            Console.WriteLine("=== CREW COMPOSITION ===");
+            foreach (var crew in cabinCrews)
+            {
+                Console.WriteLine($"{crew.getName()}: 1 Pilot, 1 Copilot, 2 Stewardesses");
+            }
+
             // Display sample data
-            Console.WriteLine("=== SAMPLE PLANES ===");
+            Console.WriteLine("\n=== SAMPLE PLANES ===");
             for (int i = 0; i < Math.Min(3, planes.Count); i++)
             {
                 Console.WriteLine($"Plane: {planes[i].getCapacity()} capacity");

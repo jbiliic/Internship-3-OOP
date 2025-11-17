@@ -7,7 +7,7 @@ using ConsoleApp1.enums;
 
 namespace ConsoleApp1.Classes
 {
-    internal class User
+    public class User
     {
         private static int idCounter = 1;
         private int id { get; }

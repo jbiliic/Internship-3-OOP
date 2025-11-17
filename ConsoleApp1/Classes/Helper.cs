@@ -169,5 +169,69 @@ namespace ConsoleApp1.Classes
                 }
             }
         }
+        public static DateTime getAndValidateTime(string inputType) {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write($"Unesite {inputType} u formatu dd-mm-yyyy HH:mm: ");
+                var input = Console.ReadLine();
+                try
+                {
+                    DateTime toReturn = DateTime.ParseExact(input, "dd-MM-yyyy HH:mm", null);
+                    if (toReturn < DateTime.Now || toReturn > DateTime.Now.AddYears(10))
+                    {
+                        Console.Write("\nUneseni datum je u proslosti ili previse u buducnosti!!! Pritisnite enter te pokusajte ponovno");
+                        Console.ReadKey();
+                        continue;
+                    }
+                    Console.Clear();
+                    return toReturn;
+                }
+                catch (Exception)
+                {
+                    Console.Write("\nNeispravan format datuma!!! Pritisnite enter te pokusajte ponovno");
+                    Console.ReadKey();
+                }
+            }
+
+        }
+        public static Dictionary<int, Plane> getAvailablePlanes(DateTime departureTime, DateTime arrivalTime)
+        {
+            var availablePlanes = new Dictionary<int, Plane>();
+            foreach (var plane in GlobalVariables.planeDataBase)
+            {
+                var hasOverLappingFlight = false;
+                foreach (var flight in plane.GetFlights())
+                {
+                    if (Helper.DoTimeRangesOverlap(departureTime, arrivalTime, flight.getDepartureTime(), flight.getArrvalTime()))
+                    {
+                        hasOverLappingFlight = true;
+                        break;
+                    }
+                }
+                if (!hasOverLappingFlight)
+                    availablePlanes.Add(plane.getId(), plane);
+            }
+            return availablePlanes;
+        }
+        public static Dictionary<int, CabinCrew> getAvailableCrew(DateTime departureTime, DateTime arrivalTime)
+        {
+            var availableCrew = new Dictionary<int, CabinCrew>();
+            foreach (var crew in GlobalVariables.cabinCrewDataBase.Where(c => c.getCrew().Count()>=4))
+            {
+                var hasOverLappingFlight = false;
+                foreach (var flight in crew.getFlights())
+                {
+                    if (Helper.DoTimeRangesOverlap(departureTime, arrivalTime, flight.getDepartureTime(), flight.getArrvalTime()))
+                    {
+                        hasOverLappingFlight = true;
+                        break;
+                    }
+                }
+                if (!hasOverLappingFlight)
+                    availableCrew.Add(crew.getId(), crew);
+            }
+            return availableCrew;
+        }
     }
 }

@@ -7,7 +7,7 @@ using ConsoleApp1.enums;
 
 namespace ConsoleApp1.Classes
 {
-    internal class Flight
+    public class Flight
     {
         private static int idCounter = 1;
         private int id { get; }
@@ -25,7 +25,7 @@ namespace ConsoleApp1.Classes
         private CabinCrew assignedCrew { get; set; }
 
 
-        public Flight(string origin, string destination,int distance , DateTime departureTime, DateTime arrivalTime,flightClasses flightClass,Plane assignedPlane , CabinCrew assignedCrew)
+        public Flight(string origin, string destination,int distance , DateTime departureTime, DateTime arrivalTime,Plane assignedPlane , CabinCrew assignedCrew)
         {
             this.origin = origin;
             this.destination = destination;

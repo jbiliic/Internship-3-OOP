@@ -7,7 +7,7 @@ using ConsoleApp1.enums;
 
 namespace ConsoleApp1.Classes
 {
-    internal class Plane
+    public class Plane
     {
         private static int idCounter = 1;
         private int id { get; }
@@ -25,5 +25,16 @@ namespace ConsoleApp1.Classes
             this.id = idCounter++;
         }
         public int getCapacity() => capacity;
+        public List<Flight> GetFlights() => flights;
+        public int getId() => id;
+        public void printPlaneInfo()
+        {
+            Console.WriteLine($"ID: {id} - Model: {model} - Kapacitet: {capacity} - Godina proizvodnje: {makeYear.Year}");
+        }
+        public void addFlight(Flight flight)
+        {
+            flights.Add(flight);
+        }
+
     }
 }

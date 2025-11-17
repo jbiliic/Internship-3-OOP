@@ -7,7 +7,7 @@ using ConsoleApp1.enums;
 
 namespace ConsoleApp1.Classes
 {
-    internal class CabinMember
+    public class CabinMember
     {
         private static int idCounter = 1;
         private int id { get; }
@@ -30,5 +30,9 @@ namespace ConsoleApp1.Classes
             this.id = idCounter++;
         }
         public cabinCrewRoles getRole() => role;
+        public void printInfo()
+        {
+            Console.WriteLine($"ID: {id} - Ime: {name} {lastName} - Uloga: {role} - Datum rodjenja: {dateOfBirth}");
+        }
     }
 }
