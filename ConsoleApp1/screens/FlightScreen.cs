@@ -212,5 +212,88 @@ namespace ConsoleApp1.screens
             }
 
         }
+        public static void editFlight() {
+            Console.Clear();
+            if (GlobalVariables.flightDataBase.Count() == 0)
+            {
+                Helper.clearDisplAndDisplMessage("Nema letova za pretrazivanje");
+                return;
+            }
+            var inputId = 0;
+            while (true)
+            {
+                inputId = Helper.getAndValidateInputInt("id leta koji zelite urediti ili 0 za izlaz");
+                if (inputId == 0) return;
+                var flight = GlobalVariables.flightDataBase.Find(f => f.getId() == inputId);
+                if (flight == null)
+                {
+                    Helper.clearDisplAndDisplMessage("Let s unesenim ID-em ne postoji");
+                    continue;
+                }
+                break;
+            }
+            var flightToEdit = GlobalVariables.flightDataBase.Find(f => f.getId() == inputId);
+            var departureTime = Helper.getAndValidateTime("novo vrijeme polaska");
+            var arrivalTime = DateTime.Now;
+            while (true)
+            {
+                arrivalTime = Helper.getAndValidateTime("novo vrijeme slijetanja");
+                if (departureTime > arrivalTime)
+                {
+                    Helper.clearDisplAndDisplMessage("Avion nemoze slijetjeti prije nego sto je krenuo");
+                    continue;
+                }
+                else { break; }
+            }
+            var availableCrew = Helper.getAvailableCrew(departureTime, arrivalTime);
+            if (availableCrew.Count() == 0)
+            {
+                Helper.clearDisplAndDisplMessage("Nema dostupne posade za odabrano vrijeme pa se let nemoze dodati");
+                return;
+            }
+            foreach (var flight in flightToEdit.getPlane().GetFlights()) {
+                if (flight == flightToEdit) continue;
+                if (Helper.DoTimeRangesOverlap(flight.getDepartureTime(), flight.getArrvalTime(), departureTime, arrivalTime)) {
+                    Helper.clearDisplAndDisplMessage("Nemoguce je dodati ovo vrijeme jer vas avion tada ima drugi let");
+                    return;
+                }
+            }
+            var crewId = 0;
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Dostupna posada:");
+                foreach (var crew in availableCrew.Values)
+                {
+                    crew.printCrewInfo();
+                }
+                Console.ReadKey();
+                crewId = Helper.getAndValidateInputInt("ID posade ili 0 za povratak");
+                if (crewId == 0) return;
+                if (!availableCrew.ContainsKey(crewId))
+                {
+                    Helper.clearDisplAndDisplMessage("Unijeli ste nepostojeci ID");
+                    continue;
+                }
+                break;
+            }
+            if (Helper.waitForConfirmation())
+            {
+
+                flightToEdit.getCrew().getFlights().Remove(flightToEdit);
+                availableCrew[crewId].addFlight(flightToEdit);
+                flightToEdit.addCabinCrew(availableCrew[crewId]);
+                flightToEdit.updateDepartureTime(departureTime);
+                flightToEdit.updateArrivalTime(arrivalTime);
+                Helper.clearDisplAndDisplMessage("Uspjesno ste uredili let");
+                return;
+            }
+            else { 
+                Helper.clearDisplAndDisplMessage("Radnja otkazana");
+                return;
+            }
+
+
+        }
     }
 }
