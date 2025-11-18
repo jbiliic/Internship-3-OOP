@@ -18,7 +18,7 @@ namespace ConsoleApp1.Classes
         private DateTime departureTime { get; set; }
         private DateTime arrivalTime { get; set; }
         private DateTime createdAt { get; }
-        private DateTime updatedAt { get; }
+        private DateTime updatedAt { get; set; }
         public TimeSpan duration => arrivalTime - departureTime;
         private List<User> passengers = new List<User>() ;
         private Plane assignedPlane { get; set; }
@@ -65,6 +65,16 @@ namespace ConsoleApp1.Classes
         {
             assignedPlane = plane;
         }
-        
+        public void updateDepartureTime(DateTime newDepartureTime)
+        {
+            departureTime = newDepartureTime;
+            updatedAt = DateTime.Now;
+        }
+        public void updateArrivalTime(DateTime newArrivalTime)
+        {
+            arrivalTime = newArrivalTime;
+            updatedAt = DateTime.Now;
+        }
+
     }
 }

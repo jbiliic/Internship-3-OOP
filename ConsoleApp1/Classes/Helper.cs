@@ -71,7 +71,7 @@ namespace ConsoleApp1.Classes
                 Console.Clear();
                 Console.Write($"\nUnesite {inputType}: ");
                 var toReturn = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || !ContainsSpecialCharacters(toReturn))
+                if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 6 || !ContainsSpecialCharacters(toReturn))
                 { Console.Write($"\n{inputType} nesmije biti prazno, te mora biti duze od 6 slova i sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
                 Console.Clear();
                 return toReturn;
@@ -240,6 +240,45 @@ namespace ConsoleApp1.Classes
                     canBeDeleted.Add(flight.getId(), flight);
             }
             return canBeDeleted;
+        }
+        public static string getAndValidatePlaneName(string inputType)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write($"\nUnesite {inputType}: ");
+                var toReturn = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || toReturn.Length > 20)
+                { Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                Console.Clear();
+                return toReturn;
+            }
+        }
+        public static DateTime getAndValidatePlaneMakeYear(string inputType)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write($"Unesite {inputType} u formatu yyyy: ");
+                var input = Console.ReadLine();
+                try
+                {
+                    DateTime toReturn = DateTime.ParseExact(input, "yyyy", null);
+                    if (toReturn > DateTime.Now || toReturn < DateTime.Now.AddYears(-100))
+                    {
+                        Console.Write("\nUneseni datum je u buducnosti ili je previse u proslosti!!! Pritisnite enter te pokusajte ponovno");
+                        Console.ReadKey();
+                        continue;
+                    }
+                    Console.Clear();
+                    return toReturn;
+                }
+                catch (Exception)
+                {
+                    Console.Write("\nNeispravan format datuma!!! Pritisnite enter te pokusajte ponovno");
+                    Console.ReadKey();
+                }
+            }
         }
     }
 }

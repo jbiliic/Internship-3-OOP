@@ -39,6 +39,7 @@ namespace ConsoleApp1.screens
                         searchFlight();
                         break;
                     case '4':
+                        editFlight();
                         break;
                     case '5':
                         deleteFlight();
@@ -46,11 +47,11 @@ namespace ConsoleApp1.screens
                     case '6':
                         return;
                     default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
                         break;
                 }
             }
         }
-
         public static void addFlight()
         {
             var origin = Helper.getAndValidateName("lokaciju pocetka leta");
@@ -97,9 +98,7 @@ namespace ConsoleApp1.screens
                 Console.Clear();
                 Console.WriteLine("Dostupni avioni:");
                 foreach (var plane in availablePlanes.Values)
-                {
-                    plane.printPlaneInfo();
-                }
+                   plane.printPlaneInfo();
                 Console.ReadKey();
                 planeId = Helper.getAndValidateInputInt("ID aviona ili 0 za povratak");
                 if (planeId == 0) return;
@@ -116,9 +115,7 @@ namespace ConsoleApp1.screens
                 Console.Clear();
                 Console.WriteLine("Dostupna posada:");
                 foreach (var crew in availableCrew.Values)
-                {
-                    crew.printCrewInfo();
-                }
+                   crew.printCrewInfo();
                 Console.ReadKey();
                 crewId = Helper.getAndValidateInputInt("ID posade ili 0 za povratak");
                 if (crewId == 0) return;
@@ -172,7 +169,7 @@ namespace ConsoleApp1.screens
             var flights = Helper.canBeDeleted();
             if (GlobalVariables.flightDataBase.Count() == 0 || flights.Count()==0)
             {
-                Helper.clearDisplAndDisplMessage("Nema letova za pretrazivanje");
+                Helper.clearDisplAndDisplMessage("Nema letova za brisanje");
                 return;
             }
             while (true)
@@ -208,15 +205,13 @@ namespace ConsoleApp1.screens
                         return;
                     }
                 }
-
             }
-
         }
         public static void editFlight() {
             Console.Clear();
             if (GlobalVariables.flightDataBase.Count() == 0)
             {
-                Helper.clearDisplAndDisplMessage("Nema letova za pretrazivanje");
+                Helper.clearDisplAndDisplMessage("Nema letova za uredivanje");
                 return;
             }
             var inputId = 0;
@@ -264,9 +259,7 @@ namespace ConsoleApp1.screens
                 Console.Clear();
                 Console.WriteLine("Dostupna posada:");
                 foreach (var crew in availableCrew.Values)
-                {
                     crew.printCrewInfo();
-                }
                 Console.ReadKey();
                 crewId = Helper.getAndValidateInputInt("ID posade ili 0 za povratak");
                 if (crewId == 0) return;

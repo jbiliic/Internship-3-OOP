@@ -26,10 +26,11 @@ namespace ConsoleApp1.Classes
         }
         public int getCapacity() => capacity;
         public List<Flight> GetFlights() => flights;
+        public string getModel() => model;
         public int getId() => id;
         public void printPlaneInfo()
         {
-            Console.WriteLine($"ID: {id} - Model: {model} - Kapacitet: {capacity} - Godina proizvodnje: {makeYear.Year}");
+            Console.WriteLine($"ID: {id} - Model: {model} - Kapacitet: {capacity} - Godina proizvodnje: {makeYear.Year} Broj letova: {flights.Count()}");
         }
         public void addFlight(Flight flight)
         {

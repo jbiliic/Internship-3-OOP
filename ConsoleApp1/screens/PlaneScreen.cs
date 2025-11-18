@@ -1,0 +1,195 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ConsoleApp1.Classes;
+
+namespace ConsoleApp1.screens
+{
+    internal class PlaneScreen
+    {
+        public static void planeScreen() {
+            while (true) { 
+                Console.Clear();
+                Console.Write("1 - Prikaz aviona\n2 - Dodavanje aviona\n3 - Pretrazivanje aviona\n4 - Brisanje aviona\n5 - Povratak\nUnos: ");
+                switch (Console.ReadKey().KeyChar) {
+                    case '1':
+                        Console.Clear();
+                        if (GlobalVariables.planeDataBase.Count() != 0){
+                            foreach(var plane in GlobalVariables.planeDataBase)
+                                plane.printPlaneInfo();
+                            Console.ReadKey();
+                        }
+                        else { 
+                            Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
+                        }
+                            break;
+                    case '2':
+                        addPlaneScreen();
+                        break;
+                    case '3':
+                        if (GlobalVariables.planeDataBase.Count() != 0)
+                            searchPlane();
+                        else
+                            Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
+                        break;
+                    case '4':
+                        deletePlaneScreen();
+                        break;
+                    case '5':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+
+                }
+            }
+        }
+        public static void addPlaneScreen(){ 
+           var planeModel = Helper.getAndValidatePlaneName("model aviona: ");
+           var planeCapacity = Helper.getAndValidateInputInt("kapacitet aviona: ");
+           var planeMakeYear = Helper.getAndValidatePlaneMakeYear("godinu proizvodnje aviona: ");
+           var newPlane = new Plane(planeModel, planeCapacity, planeMakeYear);
+           GlobalVariables.planeDataBase.Add(newPlane);
+           Helper.clearDisplAndDisplMessage("Avion uspijesno dodan");
+           return;
+        }
+        public static void searchPlane() {
+            while (true) { 
+                Console.Clear();
+                Console.Write("1 - Pretrazi po id\n2 - Pretrazi po imenu\nUnos:");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        while (true)
+                        {
+                            var inputId = Helper.getAndValidateInputInt("id aviona za pretragu ili 0 za povratak");
+                            if (inputId == 0) break;
+                            var selectedPlane = GlobalVariables.planeDataBase.Find(p => p.getId() == inputId);
+                            if (selectedPlane == null)
+                            {
+                                Helper.clearDisplAndDisplMessage("Avion sa unesenim id-em ne postoji u bazi podataka");
+                                continue;
+                            }
+                            else
+                            {
+                                selectedPlane.printPlaneInfo();
+                                Console.ReadKey();
+                                break;
+                            }
+                        }
+                            break;
+                    case '2':
+                        while (true)
+                        {
+                            var inputName = Helper.getAndValidatePlaneName("ime aviona");
+                            var selectedPlane = GlobalVariables.planeDataBase.Find(p => p.getModel() == inputName);
+                            if (selectedPlane == null)
+                            {
+                                Console.WriteLine("Navedeni model ne postoji u nasoj floti, unesite 0 za povratak ili bilo sto za ponovni pokusaj\nUnos:");
+                                if (Console.ReadKey().KeyChar == '0') break;
+                                continue;
+                            }
+                            else
+                            {
+                                selectedPlane.printPlaneInfo();
+                                Console.ReadKey();
+                                break;
+                            }
+                        }
+                        break;
+                    case '3':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+
+                }
+            }
+        }
+        public static void deletePlaneScreen()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("1 - Brisi po id\n2 - Brisi po imenu\nUnos:");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        while (true)
+                        {
+                            var inputId = Helper.getAndValidateInputInt("id aviona za brisanje ili 0 za povratak");
+                            if (inputId == 0) break;
+                            var selectedPlane = GlobalVariables.planeDataBase.Find(p => p.getId() == inputId);
+                            if (selectedPlane == null)
+                            {
+                                Helper.clearDisplAndDisplMessage("Avion sa unesenim id-em ne postoji u bazi podataka");
+                                continue;
+                            }
+                            else
+                            {
+                                if (Helper.waitForConfirmation())
+                                {
+                                    deletePlane(selectedPlane);
+                                    Console.WriteLine("Avion uspijesno izbrisan");
+                                }
+                                else {
+                                    Console.WriteLine("Radnja otkazana");
+                                }
+                                Console.ReadKey();
+                                break;
+                            }
+                        }
+                        break;
+                    case '2':
+                        while (true)
+                        {
+                            var inputName = Helper.getAndValidatePlaneName("ime aviona");
+                            var selectedPlane = GlobalVariables.planeDataBase.Find(p => p.getModel() == inputName);
+                            if (selectedPlane == null)
+                            {
+                                Console.WriteLine("Navedeni model ne postoji u nasoj floti, unesite 0 za povratak ili bilo sto za ponovni pokusaj\nUnos:");
+                                if (Console.ReadKey().KeyChar == '0') break;
+                                continue;
+                            }
+                            else
+                            {
+                                if (Helper.waitForConfirmation())
+                                {
+                                    deletePlane(selectedPlane);
+                                    Console.WriteLine("Avion uspijesno izbrisan");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Radnja otkazana");
+                                }
+                                Console.ReadKey();
+                                break;
+                            }
+                        }
+                        break;
+                    case '3':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+
+                }
+            }
+        }
+        public static void deletePlane(Plane plane)
+        {
+            foreach (var flight in plane.GetFlights().ToList()) {
+                foreach (var user in flight.getPassengers().ToList())
+                {
+                    user.getFlights().Remove(flight);
+                }
+                flight.getPlane().GetFlights().Remove(flight);
+                flight.getCrew().getFlights().Remove(flight);
+                GlobalVariables.flightDataBase.Remove(flight);
+            }
+            GlobalVariables.planeDataBase.Remove(plane);
+        }
+    }
+}

@@ -7,6 +7,9 @@ namespace ConsoleApp1.TestData
 {
     internal static class TestDataGenerator
     {
+        // ------------------------
+        // 1. PLANES
+        // ------------------------
         public static List<Plane> GeneratePlanes()
         {
             return new List<Plane>
@@ -20,23 +23,26 @@ namespace ConsoleApp1.TestData
             };
         }
 
+        // ------------------------
+        // 2. CABIN MEMBERS
+        // ------------------------
         public static List<CabinMember> GenerateCabinMembers()
         {
             return new List<CabinMember>
             {
-                // Pilots (4 pilots for 4 crews)
+                // Pilots
                 new CabinMember("John", "Smith", cabinCrewRoles.Pilot, new DateTime(1980, 5, 15), gender.Male),
                 new CabinMember("Sarah", "Johnson", cabinCrewRoles.Pilot, new DateTime(1985, 8, 22), gender.Female),
                 new CabinMember("Michael", "Brown", cabinCrewRoles.Pilot, new DateTime(1978, 12, 3), gender.Male),
                 new CabinMember("Emily", "Davis", cabinCrewRoles.Pilot, new DateTime(1982, 3, 30), gender.Female),
-                
-                // Copilots (4 copilots for 4 crews)
+
+                // Copilots
                 new CabinMember("David", "Wilson", cabinCrewRoles.Copilot, new DateTime(1990, 7, 14), gender.Male),
                 new CabinMember("Jessica", "Miller", cabinCrewRoles.Copilot, new DateTime(1992, 2, 28), gender.Female),
                 new CabinMember("Robert", "Taylor", cabinCrewRoles.Copilot, new DateTime(1988, 11, 10), gender.Male),
                 new CabinMember("Amanda", "Anderson", cabinCrewRoles.Copilot, new DateTime(1991, 6, 5), gender.Female),
-                
-                // Stewardesses (8 stewardesses for 4 crews - 2 per crew)
+
+                // Stewardesses
                 new CabinMember("Lisa", "Martinez", cabinCrewRoles.Stewardess, new DateTime(1995, 4, 18), gender.Female),
                 new CabinMember("Jennifer", "Thomas", cabinCrewRoles.Stewardess, new DateTime(1993, 9, 25), gender.Female),
                 new CabinMember("Maria", "Garcia", cabinCrewRoles.Stewardess, new DateTime(1994, 1, 12), gender.Female),
@@ -48,7 +54,10 @@ namespace ConsoleApp1.TestData
             };
         }
 
-        public static List<CabinCrew> GenerateCabinCrews(List<CabinMember> allMembers)
+        // ------------------------
+        // 3. CABIN CREWS (1 pilot + 1 copilot + 2 stjuardese)
+        // ------------------------
+        public static List<CabinCrew> GenerateCabinCrews(List<CabinMember> members)
         {
             var crews = new List<CabinCrew>
             {
@@ -58,58 +67,25 @@ namespace ConsoleApp1.TestData
                 new CabinCrew("Delta Crew")
             };
 
-            // Separate members by role for easier distribution
-            var pilots = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Pilot);
-            var copilots = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Copilot);
-            var stewardesses = allMembers.FindAll(m => m.getRole() == cabinCrewRoles.Stewardess);
+            // Separate groups
+            var pilots = members.FindAll(x => x.getRole() == cabinCrewRoles.Pilot);
+            var copilots = members.FindAll(x => x.getRole() == cabinCrewRoles.Copilot);
+            var stjs = members.FindAll(x => x.getRole() == cabinCrewRoles.Stewardess);
 
-            // Distribute members among crews (1 pilot, 1 copilot, 2 stewardesses per crew)
+            // Assign
             for (int i = 0; i < crews.Count; i++)
             {
-                // Add 1 pilot to each crew
-                if (i < pilots.Count)
-                {
-                    crews[i].addMember(pilots[i]);
-                }
-
-                // Add 1 copilot to each crew
-                if (i < copilots.Count)
-                {
-                    crews[i].addMember(copilots[i]);
-                }
-
-                // Add 2 stewardesses to each crew
-                int stewardessIndex = i * 2;
-                if (stewardessIndex < stewardesses.Count)
-                {
-                    crews[i].addMember(stewardesses[stewardessIndex]);
-                }
-                if (stewardessIndex + 1 < stewardesses.Count)
-                {
-                    crews[i].addMember(stewardesses[stewardessIndex + 1]);
-                }
+                crews[i].addMember(pilots[i]);               // 1 pilot
+                crews[i].addMember(copilots[i]);            // 1 copilot
+                crews[i].addMember(stjs[i * 2]);            // 2 stjuardese
+                crews[i].addMember(stjs[i * 2 + 1]);
             }
 
             return crews;
         }
-
-        public static List<User> GenerateUsers()
-        {
-            return new List<User>
-            {
-                new User("James", "Wilson", "james.wilson@gmail.com", "password123", new DateTime(1985, 3, 10), gender.Male),
-                new User("Mary", "Johnson", "mary.johnson@gmail.com", "password123", new DateTime(1990, 7, 22), gender.Female),
-                new User("Christopher", "Brown", "chris.brown@gmail.com", "password123", new DateTime(1988, 11, 5), gender.Male),
-                new User("Patricia", "Davis", "patricia.davis@gmail.com", "password123", new DateTime(1992, 2, 18), gender.Female),
-                new User("Daniel", "Miller", "daniel.miller@gmail.com", "password123", new DateTime(1987, 9, 30), gender.Male),
-                new User("Jennifer", "Wilson", "jennifer.wilson@gmail.com", "password123", new DateTime(1995, 4, 15), gender.Female),
-                new User("Matthew", "Taylor", "matthew.taylor@gmail.com", "password123", new DateTime(1983, 12, 8), gender.Male),
-                new User("Linda", "Anderson", "linda.anderson@gmail.com", "password123", new DateTime(1991, 6, 25), gender.Female),
-                new User("Anthony", "Thomas", "anthony.thomas@gmail.com", "password123", new DateTime(1989, 8, 12), gender.Male),
-                new User("Barbara", "Jackson", "barbara.jackson@gmail.com", "password123", new DateTime(1993, 1, 7), gender.Female)
-            };
-        }
-
+        // ------------------------
+        // 4. FLIGHTS (complete linking)
+        // ------------------------
         public static List<Flight> GenerateFlights(List<Plane> planes, List<CabinCrew> crews)
         {
             var flights = new List<Flight>();
@@ -129,13 +105,25 @@ namespace ConsoleApp1.TestData
 
             for (int i = 0; i < 15; i++)
             {
+                // choose route
                 var route = routes[random.Next(routes.Length)];
+
+                // choose plane & crew
                 var plane = planes[random.Next(planes.Count)];
                 var crew = crews[random.Next(crews.Count)];
 
-                var departureTime = DateTime.Now.AddDays(random.Next(1, 30)).AddHours(random.Next(24));
-                var arrivalTime = departureTime.AddHours(random.Next(2, 12));
+                // departure in next 1–30 days
+                var departureTime = DateTime.Now
+                    .AddDays(random.Next(1, 30))
+                    .AddHours(random.Next(0, 24))
+                    .AddMinutes(random.Next(0, 60));
 
+                // arrival 2–12 hours later
+                var arrivalTime = departureTime
+                    .AddHours(random.Next(2, 12))
+                    .AddMinutes(random.Next(0, 60));
+
+                // create flight
                 var flight = new Flight(
                     route.Origin,
                     route.Destination,
@@ -146,90 +134,124 @@ namespace ConsoleApp1.TestData
                     crew
                 );
 
+                // ADD FLIGHT TO GLOBAL LIST
                 flights.Add(flight);
+
+                // -----------------------
+                // BI-DIRECTIONAL LINKING
+                // -----------------------
+
+                // 1. Link plane → flight
+                plane.addFlight(flight);
+
+                // 2. Link crew → flight
+                crew.addFlight(flight);
+
+                // 3. Link flight → crew members (if needed)
+                //    Only if your CabinMember has addFlight()
+                
             }
 
             return flights;
         }
-
+        // ------------------------
+        // 5. USERS
+        // ------------------------
+        public static List<User> GenerateUsers()
+        {
+            return new List<User>
+            {
+                new User("James", "Wilson", "james.wilson@gmail.com", "pass123!", new DateTime(1985, 3, 10), gender.Male),
+                new User("Mary", "Johnson", "mary.johnson@gmail.com", "pass123!", new DateTime(1990, 7, 22), gender.Female),
+                new User("Christopher", "Brown", "chris.brown@gmail.com", "pass123!", new DateTime(1988, 11, 5), gender.Male),
+                new User("Patricia", "Davis", "patricia.davis@gmail.com", "pass123!", new DateTime(1992, 2, 18), gender.Female),
+                new User("Daniel", "Miller", "daniel.miller@gmail.com", "pass123!", new DateTime(1987, 9, 30), gender.Male),
+                new User("Jennifer", "Wilson", "jennifer.wilson@gmail.com", "pass123!", new DateTime(1995, 4, 15), gender.Female),
+                new User("Matthew", "Taylor", "matthew.taylor@gmail.com", "pass123!", new DateTime(1983, 12, 8), gender.Male),
+                new User("Linda", "Anderson", "linda.anderson@gmail.com", "pass123!", new DateTime(1991, 6, 25), gender.Female),
+                new User("Anthony", "Thomas", "anthony.thomas@gmail.com", "pass123!", new DateTime(1989, 8, 12), gender.Male),
+                new User("Barbara", "Jackson", "barbara.jackson@gmail.com", "pass123!", new DateTime(1993, 1, 7), gender.Female)
+            };
+        }
+        // ------------------------
+        // 6. ASSIGN PASSENGERS TO FLIGHTS
+        // ------------------------
         public static void AssignPassengersToFlights(List<User> users, List<Flight> flights)
         {
             var random = new Random();
 
             foreach (var user in users)
             {
-                // Each user gets 1-3 random flights
-                int numFlights = random.Next(1, 4);
-                var userFlights = new HashSet<Flight>();
+                // Each user gets 1–3 random flights
+                int count = random.Next(1, 4);
+                var selectedFlights = new HashSet<Flight>();
 
-                while (userFlights.Count < numFlights)
+                while (selectedFlights.Count < count)
                 {
-                    var flight = flights[random.Next(flights.Count)];
-                    if (!userFlights.Contains(flight))
+                    var f = flights[random.Next(flights.Count)];
+
+                    if (!selectedFlights.Contains(f))
                     {
-                        var flightClass = (flightClasses)random.Next(0, 3);
-                        user.getFlights().Add(flight, flightClass);
-                        flight.addPassenger(user);
-                        userFlights.Add(flight);
+                        var cls = (flightClasses)random.Next(0, 3);
+
+                        // USER → FLIGHT
+                        user.getFlights().Add(f, cls);
+
+                        // FLIGHT → USER
+                        f.addPassenger(user);
+
+                        selectedFlights.Add(f);
                     }
                 }
             }
         }
-
+        // ------------------------
+        // 7. MAIN GENERATOR
+        // ------------------------
         public static void GenerateAndDisplayTestData()
         {
-            Console.WriteLine("=== GENERATING TEST DATA ===\n");
+            Console.WriteLine("=== GENERATING TEST DATA ===");
 
-            // Generate all entities
             var planes = GeneratePlanes();
-            var cabinMembers = GenerateCabinMembers();
-            var cabinCrews = GenerateCabinCrews(cabinMembers);
+            var members = GenerateCabinMembers();
+            var crews = GenerateCabinCrews(members);
             var users = GenerateUsers();
-            var flights = GenerateFlights(planes, cabinCrews);
+            var flights = GenerateFlights(planes, crews);
 
-            // Assign passengers to flights
             AssignPassengersToFlights(users, flights);
 
+            // Save globally
             GlobalVariables.planeDataBase = planes;
-            GlobalVariables.cabinMemberDataBase = cabinMembers;
-            GlobalVariables.cabinCrewDataBase = cabinCrews;
+            GlobalVariables.cabinMemberDataBase = members;
+            GlobalVariables.cabinCrewDataBase = crews;
             GlobalVariables.userDataBase = users;
             GlobalVariables.flightDataBase = flights;
 
-            // Display generated data
-            Console.WriteLine($"Generated {planes.Count} planes");
-            Console.WriteLine($"Generated {cabinMembers.Count} cabin members");
-            Console.WriteLine($"Generated {cabinCrews.Count} cabin crews");
-            Console.WriteLine($"Generated {users.Count} users");
-            Console.WriteLine($"Generated {flights.Count} flights\n");
+            // Simple output
+            Console.WriteLine($"\nPlanes: {planes.Count}");
+            Console.WriteLine($"CabinMembers: {members.Count}");
+            Console.WriteLine($"CabinCrews: {crews.Count}");
+            Console.WriteLine($"Users: {users.Count}");
+            Console.WriteLine($"Flights: {flights.Count}");
 
-            // Display crew composition
-            Console.WriteLine("=== CREW COMPOSITION ===");
-            foreach (var crew in cabinCrews)
+            Console.WriteLine("\n=== CREW STRUCTURE ===");
+            foreach (var crew in crews)
             {
-                Console.WriteLine($"{crew.getName()}: 1 Pilot, 1 Copilot, 2 Stewardesses");
-            }
-
-            // Display sample data
-            Console.WriteLine("\n=== SAMPLE PLANES ===");
-            for (int i = 0; i < Math.Min(3, planes.Count); i++)
-            {
-                Console.WriteLine($"Plane: {planes[i].getCapacity()} capacity");
+                Console.WriteLine($"{crew.getName()} → {crew.getCrew().Count} members, {crew.getFlights().Count} flights");
             }
 
             Console.WriteLine("\n=== SAMPLE FLIGHTS ===");
             for (int i = 0; i < Math.Min(3, flights.Count); i++)
-            {
                 flights[i].printFlightInfo();
-            }
 
             Console.WriteLine("\n=== SAMPLE USERS ===");
             for (int i = 0; i < Math.Min(2, users.Count); i++)
             {
-                Console.WriteLine($"User: {users[i].getEmail()}");
+                Console.WriteLine(users[i].getEmail());
                 users[i].printAllFlights();
-                Console.WriteLine();
             }
+
+            Console.WriteLine("\n=== DATA READY ===");
         }
     }
 }

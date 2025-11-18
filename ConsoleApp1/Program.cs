@@ -26,6 +26,7 @@ namespace ConsoleApp1
                         FlightScreen.flightScreen();
                         break;
                     case '3':
+                        PlaneScreen.planeScreen();
                         break;
                     case '4':
                         break;
