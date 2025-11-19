@@ -31,7 +31,7 @@ namespace ConsoleApp1.screens
                     case '0':
                         return;
                     default:
-                        Console.WriteLine("\n Neispravan unos pokusajte nonovno");
+                        Console.WriteLine("\n Neispravan unos pokusajte ponovno");
                         break;
                 }
             }
@@ -118,7 +118,7 @@ namespace ConsoleApp1.screens
                     case '0':
                         return;
                     default:
-                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte nonovno");
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
                         break;
                 }
             }

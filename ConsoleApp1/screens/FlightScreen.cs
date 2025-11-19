@@ -197,7 +197,7 @@ namespace ConsoleApp1.screens
                         flightToDelete.getPlane().GetFlights().Remove(flightToDelete);
                         flightToDelete.getCrew().getFlights().Remove(flightToDelete);
                         GlobalVariables.flightDataBase.Remove(flightToDelete);
-                        Helper.clearDisplAndDisplMessage("Let uspijesno izbrisan");
+                        Helper.clearDisplAndDisplMessage("Let uspjesno izbrisan");
                         return;
                     }
                     else {

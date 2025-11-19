@@ -55,7 +55,7 @@ namespace ConsoleApp1.screens
            var planeMakeYear = Helper.getAndValidatePlaneMakeYear("godinu proizvodnje aviona: ");
            var newPlane = new Plane(planeModel, planeCapacity, planeMakeYear);
            GlobalVariables.planeDataBase.Add(newPlane);
-           Helper.clearDisplAndDisplMessage("Avion uspijesno dodan");
+           Helper.clearDisplAndDisplMessage("Avion uspjesno dodan");
            return;
         }
         public static void searchPlane() {
@@ -135,7 +135,7 @@ namespace ConsoleApp1.screens
                                 if (Helper.waitForConfirmation())
                                 {
                                     deletePlane(selectedPlane);
-                                    Console.WriteLine("Avion uspijesno izbrisan");
+                                    Console.WriteLine("Avion uspjesno izbrisan");
                                 }
                                 else {
                                     Console.WriteLine("Radnja otkazana");
@@ -161,7 +161,7 @@ namespace ConsoleApp1.screens
                                 if (Helper.waitForConfirmation())
                                 {
                                     deletePlane(selectedPlane);
-                                    Console.WriteLine("Avion uspijesno izbrisan");
+                                    Console.WriteLine("Avion uspjesno izbrisan");
                                 }
                                 else
                                 {

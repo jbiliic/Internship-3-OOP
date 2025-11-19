@@ -77,7 +77,8 @@ namespace ConsoleApp1.Classes
                 return toReturn;
             }
         }
-        public static int getAndValidateEnum(string prompt, int minValue, int maxValue) { 
+        public static int getAndValidateEnum(string prompt, int minValue, int maxValue) 
+        {
             while (true)
             {
                 Console.Clear();
@@ -140,28 +141,28 @@ namespace ConsoleApp1.Classes
             Console.WriteLine(message);
             Console.ReadKey();
         }
-        public static bool DoTimeRangesOverlap( DateTime start1, DateTime end1,DateTime start2, DateTime end2)
+        public static bool DoTimeRangesOverlap(DateTime start1, DateTime end1, DateTime start2, DateTime end2)
         {
             return start1 < end2 && start2 < end1;
         }
-        public static bool waitForConfirmation() { 
+        public static bool waitForConfirmation() 
+        { 
             while (true)
             {
                 Console.Clear();
                 Console.Write("\nJeste li sigurni (da/ne): ");
-                switch (Console.ReadLine()) {
+                switch (Console.ReadLine()) 
+                {
                     case "da":
                     case "DA":
                     case "Da":
                         Console.Clear();
                         return true;
-                        break;
                     case "ne":
                     case "NE":
                     case "Ne":
                         Console.Clear();
                         return false;
-                        break;
                     default:
                         Console.Write("\nNeispravan unos!!! Pritisnite enter te pokusajte ponovno");
                         Console.ReadKey();
@@ -169,7 +170,8 @@ namespace ConsoleApp1.Classes
                 }
             }
         }
-        public static DateTime getAndValidateTime(string inputType) {
+        public static DateTime getAndValidateTime(string inputType) 
+        {
             while (true)
             {
                 Console.Clear();
@@ -217,7 +219,7 @@ namespace ConsoleApp1.Classes
         public static Dictionary<int, CabinCrew> getAvailableCrew(DateTime departureTime, DateTime arrivalTime)
         {
             var availableCrew = new Dictionary<int, CabinCrew>();
-            foreach (var crew in GlobalVariables.cabinCrewDataBase.Where(c => c.getCrew().Count()>=4))
+            foreach (var crew in GlobalVariables.cabinCrewDataBase.Where(c => c.getCrew().Count() >= 4))
             {
                 var hasOverLappingFlight = false;
                 foreach (var flight in crew.getFlights())
@@ -229,15 +231,22 @@ namespace ConsoleApp1.Classes
                     }
                 }
                 if (!hasOverLappingFlight)
+                {
                     availableCrew.Add(crew.getId(), crew);
+                }
             }
             return availableCrew;
         }
-        public static Dictionary<int, Flight> canBeDeleted() { 
+        public static Dictionary<int, Flight> canBeDeleted() 
+        { 
             var canBeDeleted = new Dictionary<int, Flight>();
-            foreach (var flight in GlobalVariables.flightDataBase) { 
-                if(flight.getPassengers().Count()<0.5*flight.getPlane().getCapacity() && flight.getDepartureTime()>DateTime.Now.AddHours(24))
+            foreach (var flight in GlobalVariables.flightDataBase) 
+            { 
+                if (flight.getPassengers().Count() < 0.5 * flight.getPlane().getCapacity() && 
+                    flight.getDepartureTime() > DateTime.Now.AddHours(24))
+                {
                     canBeDeleted.Add(flight.getId(), flight);
+                }
             }
             return canBeDeleted;
         }
