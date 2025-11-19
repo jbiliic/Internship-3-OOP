@@ -44,7 +44,11 @@ namespace ConsoleApp1.Classes
                 Console.Write($"\nUnesite {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || toReturn.Length > 20 || ContainsSpecialCharacters(toReturn))
-                { Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20 i nesmije sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                { 
+                    Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20 i nesmije sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); 
+                    Console.ReadKey(); 
+                    continue; 
+                }
                 Console.Clear();
                 return toReturn;
             }
@@ -58,7 +62,11 @@ namespace ConsoleApp1.Classes
                 Console.Write($"\nUnesite {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || !toReturn.EndsWith("@gmail.com"))
-                { Console.Write($"\n{inputType} nesmije biti prazno, te mora zavrsavati sa @gmail.com!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                { 
+                    Console.Write($"\n{inputType} nesmije biti prazno, te mora zavrsavati sa @gmail.com!!! Pritisnite enter te pokusajte ponovno"); 
+                    Console.ReadKey(); 
+                    continue; 
+                }
                 Console.Clear();
                 return toReturn;
             }
@@ -72,7 +80,11 @@ namespace ConsoleApp1.Classes
                 Console.Write($"\nUnesite {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 6 || !ContainsSpecialCharacters(toReturn))
-                { Console.Write($"\n{inputType} nesmije biti prazno, te mora biti duze od 6 slova i sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                { 
+                    Console.Write($"\n{inputType} nesmije biti prazno, te mora biti duze od 6 slova i sadrzavati posebne znakove!!! Pritisnite enter te pokusajte ponovno"); 
+                    Console.ReadKey(); 
+                    continue; 
+                }
                 Console.Clear();
                 return toReturn;
             }
@@ -258,7 +270,11 @@ namespace ConsoleApp1.Classes
                 Console.Write($"\nUnesite {inputType}: ");
                 var toReturn = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(toReturn) || toReturn.Length < 2 || toReturn.Length > 20)
-                { Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20!!! Pritisnite enter te pokusajte ponovno"); Console.ReadKey(); continue; }
+                { 
+                    Console.Write($"\n{inputType} nesmije biti prazno, krace od 2 slova te duze od 20!!! Pritisnite enter te pokusajte ponovno"); 
+                    Console.ReadKey(); 
+                    continue; 
+                }
                 Console.Clear();
                 return toReturn;
             }
