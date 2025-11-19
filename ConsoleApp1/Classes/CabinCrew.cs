@@ -13,7 +13,7 @@ namespace ConsoleApp1.Classes
         private int id { get; }
         private int numOfPilots { get; set; }
         private int numOfCopilots { get; set; }
-        private int nomOfStewardesses { get; set; }
+        private int numOfStewardesses { get; set; }
         private string name { get; }
         private List<CabinMember> crew = new List<CabinMember>();
         private List<Flight> assignedFlights = new List<Flight>();

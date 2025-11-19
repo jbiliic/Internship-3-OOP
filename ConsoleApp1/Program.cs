@@ -29,6 +29,7 @@ namespace ConsoleApp1
                         PlaneScreen.planeScreen();
                         break;
                     case '4':
+                        CrewScreen.crewScreen();
                         break;
                     case '0':
                         Environment.Exit(0);

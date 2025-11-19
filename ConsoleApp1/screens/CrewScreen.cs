@@ -32,6 +32,7 @@ namespace ConsoleApp1.screens
                         addCrewScreen();
                         break;
                     case '3':
+                        addCabinMemberScreen();
                         break;
                     case '0':
                         return;
@@ -59,7 +60,7 @@ namespace ConsoleApp1.screens
                 Console.ReadKey();
                 var pilotId = Helper.getAndValidateInputInt("Id pilota kojeg zelite ili 0 za povratak");
                 if (pilotId == 0) return;
-                selectedPilot = availablePilots.First(p => p.getId() == pilotId);
+                selectedPilot = availablePilots.FirstOrDefault(p => p.getId() == pilotId);
                 if (selectedPilot == null) {
                     Helper.clearDisplAndDisplMessage("Pilot s unesenim id-em ne postoji");
                     continue;
@@ -82,7 +83,7 @@ namespace ConsoleApp1.screens
                 Console.ReadKey();
                 var copilotId = Helper.getAndValidateInputInt("Id kopilota kojeg zelite ili 0 za povratak");
                 if (copilotId == 0) return;
-                selectedCopilot = availableCopilots.First(p => p.getId() == copilotId);
+                selectedCopilot = availableCopilots.FirstOrDefault(p => p.getId() == copilotId);
                 if (selectedCopilot == null)
                 {
                     Helper.clearDisplAndDisplMessage("Kopilot s unesenim id-em ne postoji");
@@ -106,7 +107,7 @@ namespace ConsoleApp1.screens
                 Console.ReadKey();
                 var stewardess1Id = Helper.getAndValidateInputInt("Id stewardesse kojeg zelite ili 0 za povratak");
                 if (stewardess1Id == 0) return;
-                selectedStewardess1 = availableStewardesses1.First(p => p.getId() == stewardess1Id);
+                selectedStewardess1 = availableStewardesses1.FirstOrDefault(p => p.getId() == stewardess1Id);
                 if (selectedStewardess1 == null)
                 {
                     Helper.clearDisplAndDisplMessage("Stewardessa s unesenim id-em ne postoji");
@@ -130,7 +131,7 @@ namespace ConsoleApp1.screens
                 Console.ReadKey();
                 var stewardess2Id = Helper.getAndValidateInputInt("Id stewardesse kojeg zelite ili 0 za povratak");
                 if (stewardess2Id == 0) return;
-                selectedStewardess2 = availableStewardesses2.First(p => (p.getId() == stewardess2Id) && (p != selectedStewardess1));
+                selectedStewardess2 = availableStewardesses2.FirstOrDefault(p => (p.getId() == stewardess2Id) && (p != selectedStewardess1));
                 if (selectedStewardess2 == null)
                 {
                     Helper.clearDisplAndDisplMessage("Stewardessa s unesenim id-em ne postoji");
@@ -149,6 +150,18 @@ namespace ConsoleApp1.screens
             selectedPilot.setCrew(newCrew);
             GlobalVariables.cabinCrewDataBase.Add(newCrew);
             Helper.clearDisplAndDisplMessage("Uspjesno dodana nova posada");
+        }
+        public static void addCabinMemberScreen()
+        {
+            var name = Helper.getAndValidateName("ime clana posade");
+            var lastName = Helper.getAndValidateName("prezime clana posade");
+            var dateOfBirth = Helper.getAndValidateDateOfBirth("datum rodjenja");
+            var genderInput = Helper.getAndValidateEnum("1-Muski\n2-Zenski\n3-Drugo\nUnos", 1, 3);
+            var roleInput = Helper.getAndValidateEnum("1-Pilot\n2-Copilot\n3-Stewardess\nUnos", 1, 3);
+            
+            var newMember = new CabinMember(name, lastName, (enums.cabinCrewRoles)roleInput, dateOfBirth, (enums.gender)genderInput);
+            GlobalVariables.cabinMemberDataBase.Add(newMember);
+            Helper.clearDisplAndDisplMessage("Uspjesno dodan novi clan posade");
         }
     }
 }

@@ -79,6 +79,12 @@ namespace ConsoleApp1.TestData
                 crews[i].addMember(copilots[i]);            // 1 copilot
                 crews[i].addMember(stjs[i * 2]);            // 2 stjuardese
                 crews[i].addMember(stjs[i * 2 + 1]);
+                
+                // Set back-reference for crew members
+                pilots[i].setCrew(crews[i]);
+                copilots[i].setCrew(crews[i]);
+                stjs[i * 2].setCrew(crews[i]);
+                stjs[i * 2 + 1].setCrew(crews[i]);
             }
 
             return crews;
@@ -192,7 +198,7 @@ namespace ConsoleApp1.TestData
 
                     if (!selectedFlights.Contains(f))
                     {
-                        var cls = (flightClasses)random.Next(0, 3);
+                        var cls = (flightClasses)random.Next(1, 4);
 
                         // USER → FLIGHT
                         user.getFlights().Add(f, cls);
