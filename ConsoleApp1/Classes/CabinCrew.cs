@@ -23,25 +23,12 @@ namespace ConsoleApp1.Classes
             this.name = name;
             this.createdAt = DateTime.Now;
             this.id = idCounter++;
-            this.numOfPilots = 0;
-            this.numOfCopilots = 0;
-            this.nomOfStewardesses = 0;
+            
         }
         public void addMember(CabinMember member)
         {
             crew.Add(member);
-            switch (member.getRole())
-            {
-                case cabinCrewRoles.Pilot:
-                    numOfPilots++;
-                    break;
-                case cabinCrewRoles.Copilot:
-                    numOfCopilots++;
-                    break;
-                case cabinCrewRoles.Stewardess:
-                    nomOfStewardesses++;
-                    break;
-            }
+            
         }
         public List<Flight> getFlights() => assignedFlights;
         public int getId() => id;

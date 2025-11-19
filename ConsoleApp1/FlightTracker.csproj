@@ -53,6 +53,7 @@
     <Compile Include="GlobalVariables.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="screens\CrewScreen.cs" />
     <Compile Include="screens\FlightScreen.cs" />
     <Compile Include="screens\PlaneScreen.cs" />
     <Compile Include="screens\UserScreen.cs" />

@@ -28,11 +28,18 @@ namespace ConsoleApp1.Classes
             this.memberGender = userGender;
             this.createdAt = DateTime.Now;
             this.id = idCounter++;
+            this.currentCrew = null;
         }
         public cabinCrewRoles getRole() => role;
         public void printInfo()
         {
             Console.WriteLine($"ID: {id} - Ime: {name} {lastName} - Uloga: {role} - Datum rodjenja: {dateOfBirth}");
+        }
+        public CabinCrew getCrew() => currentCrew;
+        public int getId() => id;
+        public void setCrew(CabinCrew crew)
+        {
+            this.currentCrew = crew;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Svi letovi\n2 - Dodavanje leta\n3 - Pretrazivanje letova\n4 - Uredivanje letova\n5 - Brisanje letova\n6 - Povratak\nUnos: ");
+                Console.Write("1 - Svi letovi\n2 - Dodavanje leta\n3 - Pretrazivanje letova\n4 - Uredivanje letova\n5 - Brisanje letova\n0 - Povratak\nUnos: ");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -44,7 +44,7 @@ namespace ConsoleApp1.screens
                     case '5':
                         deleteFlight();
                         break;
-                    case '6':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");

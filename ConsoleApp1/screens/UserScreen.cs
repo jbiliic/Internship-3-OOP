@@ -15,7 +15,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Registracija\r\n2 - Prijava\r\n3 - Izlaz iz programa\r\nUnos:");
+                Console.Write("1 - Registracija\r\n2 - Prijava\r\n0 - Izlaz iz programa\r\nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -28,7 +28,7 @@ namespace ConsoleApp1.screens
                         if (loggedInUser == null) break;
                         postRegScreen(loggedInUser);
                         break;
-                    case '3':
+                    case '0':
                         return;
                     default:
                         Console.WriteLine("\n Neispravan unos pokusajte nonovno");
@@ -83,7 +83,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Pregled mojih letova\r\n2 - Odabir leta\r\n3 - Pretrazivanje letova \n4 - Otkazivanje leta \n5 - Povratak \nUnos:");
+                Console.Write("1 - Pregled mojih letova\r\n2 - Odabir leta\r\n3 - Pretrazivanje letova \n4 - Otkazivanje leta \n0 - Povratak \nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -115,7 +115,7 @@ namespace ConsoleApp1.screens
                         }
                         flightCancellationScreen(loggedUser);
                         break;
-                    case '5':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte nonovno");
@@ -178,7 +178,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Pregled po id\r\n2 - Pregled po imenu\r\n3 - Povratak \nUnos:");
+                Console.Write("1 - Pregled po id\r\n2 - Pregled po imenu\r\n0 - Povratak \nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -214,7 +214,7 @@ namespace ConsoleApp1.screens
                             Console.ReadKey();
                         }
                         break;
-                    case '3':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");

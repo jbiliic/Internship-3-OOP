@@ -12,7 +12,7 @@ namespace ConsoleApp1.screens
         public static void planeScreen() {
             while (true) { 
                 Console.Clear();
-                Console.Write("1 - Prikaz aviona\n2 - Dodavanje aviona\n3 - Pretrazivanje aviona\n4 - Brisanje aviona\n5 - Povratak\nUnos: ");
+                Console.Write("1 - Prikaz aviona\n2 - Dodavanje aviona\n3 - Pretrazivanje aviona\n4 - Brisanje aviona\n0 - Povratak\nUnos: ");
                 switch (Console.ReadKey().KeyChar) {
                     case '1':
                         Console.Clear();
@@ -21,9 +21,8 @@ namespace ConsoleApp1.screens
                                 plane.printPlaneInfo();
                             Console.ReadKey();
                         }
-                        else { 
-                            Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
-                        }
+                        else 
+                                Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
                             break;
                     case '2':
                         addPlaneScreen();
@@ -35,9 +34,13 @@ namespace ConsoleApp1.screens
                             Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
                         break;
                     case '4':
-                        deletePlaneScreen();
+                        Console.Clear();
+                        if (GlobalVariables.planeDataBase.Count() != 0)
+                            deletePlaneScreen();
+                        else
+                            Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
                         break;
-                    case '5':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
@@ -58,7 +61,7 @@ namespace ConsoleApp1.screens
         public static void searchPlane() {
             while (true) { 
                 Console.Clear();
-                Console.Write("1 - Pretrazi po id\n2 - Pretrazi po imenu\nUnos:");
+                Console.Write("1 - Pretrazi po id\n2 - Pretrazi po imenu\n 0 - Povratak\nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -99,7 +102,7 @@ namespace ConsoleApp1.screens
                             }
                         }
                         break;
-                    case '3':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
@@ -113,7 +116,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Brisi po id\n2 - Brisi po imenu\nUnos:");
+                Console.Write("1 - Brisi po id\n2 - Brisi po imenu\n0 - Povratak\nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -169,7 +172,7 @@ namespace ConsoleApp1.screens
                             }
                         }
                         break;
-                    case '3':
+                    case '0':
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
@@ -189,6 +192,7 @@ namespace ConsoleApp1.screens
                 flight.getCrew().getFlights().Remove(flight);
                 GlobalVariables.flightDataBase.Remove(flight);
             }
+            
             GlobalVariables.planeDataBase.Remove(plane);
         }
     }

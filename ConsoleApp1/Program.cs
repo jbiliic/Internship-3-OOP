@@ -16,7 +16,7 @@ namespace ConsoleApp1
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Putnici\r\n2 - Letovi\r\n3 – Avioni\r\n4 – Posada\r\n5 – Izlaz iz programa\r\nUnos:");
+                Console.Write("1 - Putnici\r\n2 - Letovi\r\n3 – Avioni\r\n4 – Posada\r\n0 – Izlaz iz programa\r\nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -30,7 +30,7 @@ namespace ConsoleApp1
                         break;
                     case '4':
                         break;
-                    case '5':
+                    case '0':
                         Environment.Exit(0);
                         break;
 
