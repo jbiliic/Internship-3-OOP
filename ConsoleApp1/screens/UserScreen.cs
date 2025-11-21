@@ -260,5 +260,60 @@ namespace ConsoleApp1.screens
                 }
             }
         }
+        public static void favouritesScreen(User currentUser)
+        {
+            Console.Clear();
+            while (true) {
+                Console.Write("1 - Dodaj u favorite\n2 - Ispisi favorite\n 0 - Povratak");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        Console.Clear();
+                        if (currentUser.getFlights().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate odabranih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
+                        currentUser.printAllFlights();
+                        Console.ReadKey();
+                        var idInput = Helper.getAndValidateInputInt("Unesite ID leta za dodavanje u favorite ili 0 za povratak");
+                        if (idInput == 0) break;
+                        var searchedFlight = currentUser.getFlights().Keys.ToList().Find(f => f.getId() == idInput);
+                        if (searchedFlight != null)
+                        {
+                            currentUser.addToFavourites(searchedFlight, currentUser.getFlights()[searchedFlight]);
+                            Helper.clearDisplAndDisplMessage("Uspjesno dodano u favorite! Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
+                        else
+                        {
+                            Helper.clearDisplAndDisplMessage("Let sa unesenim ID-em ne postoji. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
+                        break;
+                    case '2':
+                        Console.Clear();
+                        if (currentUser.getFavourites().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate omiljenih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
+                        else { 
+                            foreach (var fav in currentUser.getFavourites().Keys)
+                            {
+                                fav.printFlightInfo();
+                                
+                            }
+                            Console.ReadKey();
+                        }
+                            break;
+                    case '0':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+                }
+            }
+        }
     }
 }

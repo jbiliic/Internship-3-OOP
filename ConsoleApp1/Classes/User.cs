@@ -20,6 +20,7 @@ namespace ConsoleApp1.Classes
         private DateTime dateOfBirth { get; }
 
         private Dictionary<Flight, flightClasses> flights = new Dictionary<Flight, flightClasses>();
+        private Dictionary<Flight, flightClasses> favourites = new Dictionary<Flight, flightClasses>();
 
         public User(string name, string lastName, string email, string password, DateTime dateOfBirth, gender userGender)
         {
@@ -43,6 +44,11 @@ namespace ConsoleApp1.Classes
         public string getEmail()=> email;
         public string getPassword() => password;
         public Dictionary<Flight, flightClasses> getFlights() => flights;
+        public Dictionary<Flight, flightClasses> getFavourites() => favourites;
+        public void addToFavourites(Flight flight, flightClasses flightClass)
+        {
+            favourites.Add(flight, flightClass);
+        }
 
     }
 }

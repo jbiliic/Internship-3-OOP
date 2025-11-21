@@ -278,6 +278,7 @@ namespace ConsoleApp1.screens
                 flightToEdit.addCabinCrew(availableCrew[crewId]);
                 flightToEdit.updateDepartureTime(departureTime);
                 flightToEdit.updateArrivalTime(arrivalTime);
+                flightToEdit.updateEditTime();
                 Helper.clearDisplAndDisplMessage("Uspjesno ste uredili let");
                 return;
             }

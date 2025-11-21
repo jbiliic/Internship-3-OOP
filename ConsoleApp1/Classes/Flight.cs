@@ -75,6 +75,9 @@ namespace ConsoleApp1.Classes
             arrivalTime = newArrivalTime;
             updatedAt = DateTime.Now;
         }
+        public void updateEditTime() { 
+            this.updatedAt = DateTime.Now;
+        }
 
     }
 }
