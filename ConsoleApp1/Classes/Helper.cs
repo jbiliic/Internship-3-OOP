@@ -280,5 +280,12 @@ namespace ConsoleApp1.Classes
                 }
             }
         }
+        public static void printFlightList(List<Flight> flights)
+        {
+            foreach (var flight in flights)
+            {
+                flight.printFlightInfo();
+            }
+        }
     }
 }

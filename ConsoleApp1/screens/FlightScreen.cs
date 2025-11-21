@@ -14,7 +14,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Svi letovi\n2 - Dodavanje leta\n3 - Pretrazivanje letova\n4 - Uredivanje letova\n5 - Brisanje letova\n0 - Povratak\nUnos: ");
+                Console.Write("1 - Svi letovi\n2 - Dodavanje leta\n3 - Pretrazivanje letova\n4 - Uredivanje letova\n5 - Brisanje letova\n6 - Sortirani ispis\n0 - Povratak\nUnos: ");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -44,12 +44,21 @@ namespace ConsoleApp1.screens
                     case '5':
                         deleteFlight();
                         break;
-                    case '0':
-                        return;
-                    default:
-                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                    case '6':
+                        if (GlobalVariables.flightDataBase.Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nema letova za ispis");
+                        }
+                        else { 
+                            sortedFlightsDisplay();
+                        }
                         break;
-                }
+                    case '0':
+                                return;
+                            default:
+                                Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                                break;
+                            }
             }
         }
         public static void addFlight()
@@ -288,6 +297,59 @@ namespace ConsoleApp1.screens
             }
 
 
+        }
+        public static void sortedFlightsDisplay()
+        {
+            Console.Clear();
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("1 - Silazno po vremenu polaska\r\n2 - Uzlazno po vremenu polaska\r\n3 - Silazno po vremenu trajanja leta\r\n");
+                Console.Write("4 - Uzlazno po vremenu trajanja leta\r\n5 - Silazno po udaljenosti\r\n6 - Uzlazno po udaljenosti\r\n7 - Abecedno po nazivu 0 - Povratak");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderByDescending(f => f.getDepartureTime()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '2':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderBy(f => f.getDepartureTime()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '3':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderByDescending(f => f.getDuration()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '4':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderBy(f => f.getDuration()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '5':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderByDescending(f => f.getDistance()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '6':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderBy(f => f.getDistance()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '7':
+                        Console.Clear();
+                        Helper.printFlightList(GlobalVariables.flightDataBase.OrderBy(f => f.getName()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '0':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+                }
+            }
         }
     }
 }

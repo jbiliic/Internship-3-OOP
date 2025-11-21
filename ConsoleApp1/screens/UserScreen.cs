@@ -83,7 +83,7 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 Console.Clear();
-                Console.Write("1 - Pregled mojih letova\r\n2 - Odabir leta\r\n3 - Pretrazivanje letova \n4 - Otkazivanje leta \n0 - Povratak \nUnos:");
+                Console.Write("1 - Pregled mojih letova\r\n2 - Odabir leta\r\n3 - Pretrazivanje letova \n4 - Otkazivanje leta\n5 - Favoriti\n6 - Sortirani ispis\n0 - Povratak \nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
@@ -115,12 +115,25 @@ namespace ConsoleApp1.screens
                         }
                         flightCancellationScreen(loggedUser);
                         break;
-                    case '0':
-                        return;
-                    default:
-                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte nonovno");
+                    case '5':
+                        favouritesScreen(loggedUser);
                         break;
-                }
+                    case '6':
+                        if (loggedUser.getFlights().Count() == 0)
+                        {
+                            Helper.clearDisplAndDisplMessage("Nemate odabranih letova. Pritisnite bilo koju tipku za nastavak");
+                            break;
+                        }
+                        else {
+                            sortedFlightsDisplay(loggedUser);
+                        }
+                        break;
+                    case '0':
+                                return;
+                            default:
+                                Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte nonovno");
+                                break;
+                            }
             }
         }
         public static void flightSelectionScreen(User currentUser)
@@ -264,6 +277,7 @@ namespace ConsoleApp1.screens
         {
             Console.Clear();
             while (true) {
+                Console.Clear();
                 Console.Write("1 - Dodaj u favorite\n2 - Ispisi favorite\n 0 - Povratak");
                 switch (Console.ReadKey().KeyChar)
                 {
@@ -307,6 +321,60 @@ namespace ConsoleApp1.screens
                             Console.ReadKey();
                         }
                             break;
+                    case '0':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+                }
+            }
+        }
+
+        public static void sortedFlightsDisplay(User currentUser)
+        {
+            Console.Clear();
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("1 - Silazno po vremenu polaska\r\n2 - Uzlazno po vremenu polaska\r\n3 - Silazno po vremenu trajanja leta\r\n");
+                Console.Write("4 - Uzlazno po vremenu trajanja leta\r\n5 - Silazno po udaljenosti\r\n6 - Uzlazno po udaljenosti\r\n7 - Abecedno po nazivu 0 - Povratak");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderByDescending(f => f.getDepartureTime()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '2':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderBy(f => f.getDepartureTime()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '3':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderByDescending(f => f.getDuration()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '4':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderBy(f => f.getDuration()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '5':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderByDescending(f => f.getDistance()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '6':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderBy(f => f.getDistance()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '7':
+                        Console.Clear();
+                        Helper.printFlightList(currentUser.getFlights().Keys.ToList().OrderBy(f => f.getName()).ToList());
+                        Console.ReadKey();
+                        break;
                     case '0':
                         return;
                     default:

@@ -78,6 +78,9 @@ namespace ConsoleApp1.Classes
         public void updateEditTime() { 
             this.updatedAt = DateTime.Now;
         }
+        public TimeSpan getDuration() => duration;
+        public int getDistance() => distance;
+        
 
     }
 }
