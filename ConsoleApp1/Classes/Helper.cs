@@ -287,5 +287,12 @@ namespace ConsoleApp1.Classes
                 flight.printFlightInfo();
             }
         }
+        public static void printPlaneList(List<Plane> planes)
+        {
+            foreach (var plane in planes)
+            {
+                plane.printPlaneInfo();
+            }
+        }
     }
 }

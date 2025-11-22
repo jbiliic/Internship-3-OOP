@@ -36,6 +36,8 @@ namespace ConsoleApp1.Classes
         {
             flights.Add(flight);
         }
+        public DateTime getCreatedAt() => createdAt;
+        public DateTime getMakeYear() => makeYear;
 
     }
 }

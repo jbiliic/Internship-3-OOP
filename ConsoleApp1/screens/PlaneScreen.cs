@@ -12,7 +12,7 @@ namespace ConsoleApp1.screens
         public static void planeScreen() {
             while (true) { 
                 Console.Clear();
-                Console.Write("1 - Prikaz aviona\n2 - Dodavanje aviona\n3 - Pretrazivanje aviona\n4 - Brisanje aviona\n0 - Povratak\nUnos: ");
+                Console.Write("1 - Prikaz aviona\n2 - Dodavanje aviona\n3 - Pretrazivanje aviona\n4 - Brisanje aviona\n5 - Sortirani prikaz\n0 - Povratak\nUnos: ");
                 switch (Console.ReadKey().KeyChar) {
                     case '1':
                         Console.Clear();
@@ -40,7 +40,18 @@ namespace ConsoleApp1.screens
                         else
                             Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
                         break;
+                    case '5':
+                        Console.Clear();
+                        if (GlobalVariables.planeDataBase.Count() != 0)
+                        {
+                            sortedPlaneDisplay();
+                            Console.ReadKey();
+                        }
+                        else
+                            Helper.clearDisplAndDisplMessage("Nema dostupnih aviona u bazi podataka");
+                        break;
                     case '0':
+                        
                         return;
                     default:
                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
@@ -194,6 +205,49 @@ namespace ConsoleApp1.screens
             }
             
             GlobalVariables.planeDataBase.Remove(plane);
+        }
+        public static void sortedPlaneDisplay()
+        {
+            Console.Clear();
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("1 - Po vremenu dodavanja\r\n2 - Godina proizvodnje uzlazno\r\n3 - Godina proizvodnje silazno\r\n");
+                Console.Write("4 - Broj odrađenih letova uzlazno\r\n5 - Broj odrađenih letova silazno\r\n0 - Povratak\nUnos:");
+                switch (Console.ReadKey().KeyChar)
+                {
+                    case '1':
+                        Console.Clear();
+                        Helper.printPlaneList(GlobalVariables.planeDataBase.OrderBy(f => f.getCreatedAt()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '2':
+                        Console.Clear();
+                        Helper.printPlaneList(GlobalVariables.planeDataBase.OrderBy(f => f.getMakeYear()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '3':
+                        Console.Clear();
+                        Helper.printPlaneList(GlobalVariables.planeDataBase.OrderByDescending(f => f.getMakeYear()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '4':
+                        Console.Clear();
+                        Helper.printPlaneList(GlobalVariables.planeDataBase.OrderBy(f => f.GetFlights().Count()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '5':
+                        Console.Clear();
+                        Helper.printPlaneList(GlobalVariables.planeDataBase.OrderByDescending(f => f.GetFlights().Count()).ToList());
+                        Console.ReadKey();
+                        break;
+                    case '0':
+                        return;
+                    default:
+                        Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                        break;
+                }
+            }
         }
     }
 }

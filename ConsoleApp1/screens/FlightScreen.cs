@@ -54,11 +54,11 @@ namespace ConsoleApp1.screens
                         }
                         break;
                     case '0':
-                                return;
-                            default:
-                                Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
-                                break;
-                            }
+                        return;
+                    default:
+                         Helper.clearDisplAndDisplMessage("Neispravan unos pokusajte ponovno");
+                         break;
+                }
             }
         }
         public static void addFlight()
@@ -305,7 +305,7 @@ namespace ConsoleApp1.screens
             {
                 Console.Clear();
                 Console.Write("1 - Silazno po vremenu polaska\r\n2 - Uzlazno po vremenu polaska\r\n3 - Silazno po vremenu trajanja leta\r\n");
-                Console.Write("4 - Uzlazno po vremenu trajanja leta\r\n5 - Silazno po udaljenosti\r\n6 - Uzlazno po udaljenosti\r\n7 - Abecedno po nazivu 0 - Povratak");
+                Console.Write("4 - Uzlazno po vremenu trajanja leta\r\n5 - Silazno po udaljenosti\r\n6 - Uzlazno po udaljenosti\r\n7 - Abecedno po nazivu\n0 - Povratak\nUnos:");
                 switch (Console.ReadKey().KeyChar)
                 {
                     case '1':
