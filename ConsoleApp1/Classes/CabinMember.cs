@@ -33,7 +33,7 @@ namespace ConsoleApp1.Classes
         public cabinCrewRoles getRole() => role;
         public void printInfo()
         {
-            Console.WriteLine($"ID: {id} - Ime: {name} {lastName} - Uloga: {role} - Datum rodjenja: {dateOfBirth}");
+            Console.WriteLine($"ID: {id} - Ime: {name} {lastName} - Uloga: {role} - Datum rodjenja: {dateOfBirth.ToString("dd.MM.yyyy")}");
         }
         public CabinCrew getCrew() => currentCrew;
         public int getId() => id;

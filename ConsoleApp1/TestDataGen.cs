@@ -35,12 +35,14 @@ namespace ConsoleApp1.TestData
                 new CabinMember("Sarah", "Johnson", cabinCrewRoles.Pilot, new DateTime(1985, 8, 22), gender.Female),
                 new CabinMember("Michael", "Brown", cabinCrewRoles.Pilot, new DateTime(1978, 12, 3), gender.Male),
                 new CabinMember("Emily", "Davis", cabinCrewRoles.Pilot, new DateTime(1982, 3, 30), gender.Female),
+                new CabinMember("Mr", "White", cabinCrewRoles.Pilot, new DateTime(1982, 3, 30), gender.Female),
 
                 // Copilots
                 new CabinMember("David", "Wilson", cabinCrewRoles.Copilot, new DateTime(1990, 7, 14), gender.Male),
                 new CabinMember("Jessica", "Miller", cabinCrewRoles.Copilot, new DateTime(1992, 2, 28), gender.Female),
                 new CabinMember("Robert", "Taylor", cabinCrewRoles.Copilot, new DateTime(1988, 11, 10), gender.Male),
                 new CabinMember("Amanda", "Anderson", cabinCrewRoles.Copilot, new DateTime(1991, 6, 5), gender.Female),
+                new CabinMember("zinedine", "zidane", cabinCrewRoles.Copilot, new DateTime(1991, 6, 5), gender.Female),
 
                 // Stewardesses
                 new CabinMember("Lisa", "Martinez", cabinCrewRoles.Stewardess, new DateTime(1995, 4, 18), gender.Female),
@@ -50,7 +52,9 @@ namespace ConsoleApp1.TestData
                 new CabinMember("Patricia", "Harris", cabinCrewRoles.Stewardess, new DateTime(1992, 12, 15), gender.Female),
                 new CabinMember("Nancy", "Clark", cabinCrewRoles.Stewardess, new DateTime(1997, 3, 22), gender.Female),
                 new CabinMember("Elizabeth", "Lewis", cabinCrewRoles.Stewardess, new DateTime(1994, 7, 8), gender.Female),
-                new CabinMember("Karen", "Walker", cabinCrewRoles.Stewardess, new DateTime(1996, 11, 19), gender.Female)
+                new CabinMember("Karen", "Walker", cabinCrewRoles.Stewardess, new DateTime(1996, 11, 19), gender.Female),
+                new CabinMember("Dr", "House", cabinCrewRoles.Stewardess, new DateTime(1994, 7, 8), gender.Female),
+                new CabinMember("Tony", "Soprano", cabinCrewRoles.Stewardess, new DateTime(1996, 11, 19), gender.Female)
             };
         }
 

@@ -118,11 +118,6 @@ namespace ConsoleApp1.screens
             while (true)
             {
                 var availableStewardesses2 = GlobalVariables.cabinMemberDataBase.FindAll(p => (p.getRole() == enums.cabinCrewRoles.Stewardess) && (p.getCrew() == null) && (p!= selectedStewardess1));
-                if (availableStewardesses2.Count() < 2)
-                {
-                    Helper.clearDisplAndDisplMessage("Nema dovoljno dostupnih stewardessa, prvo dodajte stewardessu pa stvorite posadu");
-                    return;
-                }
                 Console.WriteLine("Dostupne stewardesse:");
                 foreach (var crew in availableStewardesses2)
                 {
